@@ -9,7 +9,7 @@ function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RegistrationForm />} />
-        <Route path="/otp" element={<OTPValidationForm />} />
+        {/* <Route path="/otp" element={<OTPValidationForm />} /> */}
       </Routes>
     </BrowserRouter>
   );

@@ -2,11 +2,12 @@ import { Container, Typography, TextField, Button, ListItemIcon } from "@mui/mat
 import React, { useState, useEffect } from "react";
 import "./OTPValidationForm.css";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import axios from "axios"
 
-function OTPValidationForm({ onValidate, onResend }) {
+function OTPValidationForm({ email }) {
   const [otp, setOTP] = useState("");
   const [error, setError] = useState(false);
-  const [resendTimer, setResendTimer] = useState(60); // Initial timer value in seconds
+  const [resendTimer, setResendTimer] = useState(60);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -18,20 +19,34 @@ function OTPValidationForm({ onValidate, onResend }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (otp.length === 6) {
-      onValidate(otp);
-    } else {
-      setError(true);
-    }
+    // Verify OTP API Call
+    // If success redirect to dashboard
+    // else (failed) Show invalid otp in toast 
+    // otp timeout show Resend OTP button (Until hide this button) , Call Send OTP API call
+    // if (otp.length === 6) {
+    //   axios
+    //     .post("http://localhost:3001/send-otp", { otp })
+    //     .then((response) => {
+    //       const isValid = response.data.isValid;
+    //       if (isValid) {
+    //       } else {
+    //         setError(true);
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error validating OTP:", error);
+    //       setError(true);
+    //     });
+    // } else {
+    //   setError(true);
+    // }
   };
 
   const handleResend = () => {
-    onResend();
-    setResendTimer(60); // Reset the timer to 60 seconds when "Resend OTP" is clicked
+    setResendTimer(60);
   };
 
   useEffect(() => {
-    // Start the timer countdown when the component mounts
     const timerInterval = setInterval(() => {
       if (resendTimer > 0) {
         setResendTimer((prevTimer) => prevTimer - 1);
