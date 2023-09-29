@@ -8,12 +8,12 @@ import logoImage from "../components/assets/pyraimage.png";
 import { Link } from "react-router-dom";
 import OTPValidationForm from "./OTPValidationForm";
 import * as Yup from 'yup'; // Import Yup
+import axios from "axios";
 
 const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
 
-  // Define the validation schema
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email format").required("Email is required"),
     password: Yup.string().required("Password is required"),
@@ -24,10 +24,34 @@ const RegistrationForm = () => {
       email: "",
       password: "",
     },
-    validationSchema, // Pass the validation schema to Formik
-    onSubmit: (values) => {
-      setOtpSent(true);
-      // send OTP API call
+    validationSchema,
+    onSubmit: async (values) => {
+      // setOtpSent(true);
+      try {
+        const registrationResponse = await axios.post("http//localhost:8080/user/register", {
+          email: values.email,
+          password: values.password
+        });
+        if (registrationResponse.status === 201
+        ) {
+          const otpResponse = await axios.post("http//localhost:8080/otp/send_otp", {
+            email: values.email,
+          });
+          console.log(otpResponse)
+          if (otpResponse.status === 200) {
+            setOtpSent(true);
+
+            setTimeout(() => {
+            }, 60000); // 60 seconds
+          } else {
+            alert("Error sending OTP:", otpResponse.data);
+          }
+        } else {
+          alert("Error registering user:", registrationResponse);
+        }
+      } catch (error) {
+        alert("Error:", error);
+      }
     }
   });
 
@@ -112,3 +136,6 @@ const RegistrationForm = () => {
 };
 
 export default RegistrationForm;
+
+
+
