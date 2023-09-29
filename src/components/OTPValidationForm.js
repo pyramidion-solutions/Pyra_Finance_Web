@@ -137,7 +137,6 @@ return (
     </Button>
   </Container>
 );
-}
 
 export default OTPValidationForm;
 
