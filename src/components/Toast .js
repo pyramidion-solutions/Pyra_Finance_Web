@@ -7,7 +7,6 @@ const Toast = () => {
   const token = useSelector((state) => state.auth.token);
 
   const handleClose = () => {
-    // Handle close event
   };
 
   return (

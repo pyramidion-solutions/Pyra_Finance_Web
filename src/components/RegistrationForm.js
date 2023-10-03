@@ -28,28 +28,30 @@ const RegistrationForm = () => {
     onSubmit: async (values) => {
       // setOtpSent(true);
       try {
-        const registrationResponse = await axios.post("http//localhost:8080/user/register", {
+        localStorage.setItem("email", values.email)
+        const registrationResponse = await axios.post("http://localhost:8080/user/register", {
           email: values.email,
           password: values.password
         });
         if (registrationResponse.status === 201
         ) {
-          const otpResponse = await axios.post("http//localhost:8080/otp/send_otp", {
-            email: values.email,
-          });
-          console.log(otpResponse)
-          if (otpResponse.status === 200) {
-            setOtpSent(true);
+          // const otpResponse = await axios.post("http://localhost:8080/otp/send_otp", {
+          //   email: values.email,
+          // });
+          // console.log(otpResponse)
+          // if (otpResponse.status === 200) {
+          setOtpSent(true);
 
-            setTimeout(() => {
-            }, 60000); // 60 seconds
-          } else {
-            alert("Error sending OTP:", otpResponse.data);
-          }
+          //   setTimeout(() => {
+          //   }, 60000); // 60 seconds
+          // } else {
+          //   alert("Error sending OTP:", otpResponse.data);
+          // }
         } else {
           alert("Error registering user:", registrationResponse);
         }
       } catch (error) {
+        console.log(error)
         alert("Error:", error);
       }
     }
