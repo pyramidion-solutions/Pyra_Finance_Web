@@ -1,0 +1,41 @@
+<html>
+    <table >
+        <tr >
+            <td style="text-align:left;color:gray;padding:10px"> Payment Date
+            </td>
+            <td style="text-align:left;padding:10px">
+           <b> ${moment(
+            data[0].ActionDate
+            ).format(
+            "DD-MM-YYYY"
+            )}</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left;color:gray;padding:10px">
+            Reference Date</td>
+            <td style="text-align:left;padding:10px">
+           <b> ${moment(
+            data[0].DueDate
+            ).format(
+            "DD-MM-YYYY"
+            )}</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left;color:gray;padding:10px">
+            Payment Mode</td>
+            <td style="text-align:left">
+            <b>Bank Transfer</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left;color:gray;padding:10px">Amount Received <br />in
+            Words
+            </td>
+            <td style="text-align:left;padding:10px">
+       <b>${words}</b>
+            </td>
+        </tr>
+    </table>
+</html>
